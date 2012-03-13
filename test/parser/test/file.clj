@@ -20,3 +20,7 @@
   (expect [get-input-stream (returns (mock-stream ["ff" "00" "0f"]))]
           (doseq [c [255 0 15]]
             (is (= c (.read (get-input-stream "file")))))))
+
+(deftest read-bytes-from-input-stream
+  (let [input-stream (mock-stream ["CA" "FE" "BA" "BE"])]
+    (is (= [202 254 186 190] (read-next-bytes input-stream 4)))))
