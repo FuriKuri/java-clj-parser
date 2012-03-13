@@ -9,11 +9,17 @@
                       [15 "f"]]]
     (is (= result (int-to-hex i)))))
 
-(deftest convert-int-to-hex
+(deftest convert-int-to-2char-hex
   (doseq [[i result] [
                       [255 "ff"]
                       [0 "00"]
                       [15 "0f"]]]
+    (is (= result (int-to-2char-hex i)))))
+
+(deftest convert-int-ary-to-2char-hex
+  (doseq [[i result] [
+                      ['(255 0 12) '("ff" "00" "0c")]
+                      ['(202 254 186 190) '("ca" "fe" "ba" "be")]]]
     (is (= result (int-to-2char-hex i)))))
 
 (deftest convert-hex-to-byte
