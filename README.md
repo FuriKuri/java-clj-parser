@@ -1,13 +1,12 @@
 # java-clj-parser
-
-FIXME: write description
+My simple Java Bytecode parser written in Clojure.
 
 ## Usage
 
-FIXME: write
+
 
 ## License
 
-Copyright (C) 2012 FIXME
+Copyright (C) 2012 FuriKuri
 
 Distributed under the Eclipse Public License, the same as Clojure.
