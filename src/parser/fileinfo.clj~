@@ -1,0 +1,4 @@
+(ns parser.fileinfo)
+
+(def magic-number [is])
+  
