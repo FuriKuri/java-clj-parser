@@ -29,3 +29,9 @@
                       ["7f" 127]
                       ["80" -128]]]
     (is (= result (hex-to-byte hex)))))
+
+(deftest convert-int-ary-to-2char-hex
+  (doseq [[i result] [
+                      ['("ff" "00" "0c") '(-1 0 12)]
+                      ['("ca" "fe" "ba" "be") '(-54 -2 -70 -66)]]]
+    (is (= result (hex-to-byte i)))))

@@ -24,3 +24,12 @@
 (deftest read-bytes-from-input-stream
   (let [input-stream (mock-stream ["CA" "FE" "BA" "BE"])]
     (is (= [202 254 186 190] (read-next-bytes input-stream 4)))))
+
+(deftest read-bytes-as-hex-from-input-stream
+  (let [input-stream (mock-stream ["CA" "FE" "BA" "BE"])]
+    (is (= ["ca" "fe" "ba" "be"] (read-next-bytes-as-hex input-stream 4)))))
+
+(deftest read-bytes-as-hex-from-input-stream
+  (let [input-stream (mock-stream ["CA" "FE" "BA" "BE"])]
+    (is (= "cafebabe" (read-next-bytes-as-hex-str input-stream 4)))))
+

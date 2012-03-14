@@ -12,7 +12,9 @@
         hex))))
 
 (defn hex-to-byte [hex]
-  (let [i (Integer/parseInt hex 16)]
-    (if (< 127 i)
-      (- i 256)
-      i)))
+  (if (seq? hex)
+    (map hex-to-byte hex)
+    (let [i (Integer/parseInt hex 16)]
+      (if (< 127 i)
+        (- i 256)
+        i))))
