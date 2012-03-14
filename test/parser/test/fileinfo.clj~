@@ -1,6 +1,0 @@
-(ns parser.test.fileinfo
-  (:use [parser.fileinfo])
-  (:use [clojure.test]))
-
-(deftest read-magic-number
-  )
