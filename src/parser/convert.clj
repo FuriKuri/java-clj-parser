@@ -18,3 +18,7 @@
       (if (< 127 i)
         (- i 256)
         i))))
+
+(defn hex-to-int [hex]
+  (Integer/parseInt hex 16))
+  

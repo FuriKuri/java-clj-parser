@@ -30,8 +30,15 @@
                       ["80" -128]]]
     (is (= result (hex-to-byte hex)))))
 
-(deftest convert-int-ary-to-2char-hex
+(deftest convert-hex-ary-to-bytes
   (doseq [[i result] [
                       ['("ff" "00" "0c") '(-1 0 12)]
                       ['("ca" "fe" "ba" "be") '(-54 -2 -70 -66)]]]
     (is (= result (hex-to-byte i)))))
+
+(deftest convert-hex-to-int
+  (doseq [[hex result] [
+                        ["0003" 3]
+                        ["00FF" 255]
+                        ["ABCD" 43981]]]
+    (is (= result (hex-to-int hex)))))
