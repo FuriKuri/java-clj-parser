@@ -28,7 +28,7 @@
              (fieldref input-stream))))))
 
 (deftest read-methodref
-  (doseq [[stream-bytes class-index name-type-index] [
+  (doseq [[stream-bytes class-index name-type-index actual] [
                                 ['("00" "01" "00" "03") 1 3
                                  '("00" "F0" "01" "00") 125 126]]]
     (let [input-stream (mock-stream stream-bytes)]
