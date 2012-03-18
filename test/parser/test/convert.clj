@@ -42,3 +42,28 @@
                         ["00FF" 255]
                         ["ABCD" 43981]]]
     (is (= result (hex-to-int hex)))))
+
+(deftest convert-hex-to-float
+  (doseq [[hex result] [
+                        ["40C00000" 6.0]
+                        ["100C0002" 2.761013770126649E-29]]]
+    (is (= result (hex-to-float hex)))))
+
+(deftest convert-hex-to-long
+  (doseq [[hex result] [
+                        ["0000000000000003" 3]
+                        ["FFFFFFFFFFFFFFFF" -1]
+                        ["0000ABCDABCDABCD" 188899839028173]]]
+    (is (= result (hex-to-long hex)))))
+
+(deftest convert-hex-to-double
+  (doseq [[hex result] [
+                        ["0000000000000003" 3]
+                        ["FFFFFFFFFFFFFFFF" 1.8446744073709552E19]
+                        ["0000ABCDABCDABCD" 1.88899839028173E14]]]
+    (is (= result (hex-to-double hex)))))
+
+(deftest convert-hex-to-utf8
+  (doseq [[hex result] [
+                        ["48656C6C6F576F726C64" "HelloWorld"]]]
+    (is (= result (hex-to-utf8 hex)))))

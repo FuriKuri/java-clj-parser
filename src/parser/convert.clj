@@ -21,4 +21,25 @@
 
 (defn hex-to-int [hex]
   (Integer/parseInt hex 16))
-  
+
+(defn hex-to-float [hex]
+  (let [long-value (Long/parseLong hex 16)]
+    (Float/intBitsToFloat long-value)))
+
+(defn hex-to-long [hex]
+  (-> (java.math.BigInteger. hex 16) .longValue))
+
+(defn hex-to-double [hex]
+  (-> (java.math.BigInteger. hex 16) .doubleValue))
+
+(defn hex-to-utf8 [hex]
+  (let [result (StringBuilder.)
+        size (.length hex)]
+    (loop [i 0]
+      (if (= size i)
+        (.toString result)
+        (let [hex-code (-> hex (.substring i (+ i 2)))
+              code (hex-to-int hex-code)
+              _ (-> result (.append (char code)))]
+            (recur (+ i 2)))))))
+    
