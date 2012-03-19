@@ -9,7 +9,7 @@
                                  ['("00" "03") 2
                                   '("00" "0F") 15]]]
     (let [input-stream (mock-stream stream-bytes)]
-      (is (= {:constant-count result} (constant-count input-stream))))))
+      (is (= result (constant-count input-stream))))))
 
 (deftest read-class-info
   (doseq [[stream-bytes result] [
@@ -180,3 +180,35 @@
                                     "6F" "57" "6F" "72" "6C" "64") "HelloWorld"]]]
     (let [input-stream (mock-stream stream-bytes)]
       (is (= {:utf8-info {:value result}} (parse-const-type input-stream))))))
+
+(deftest read-class-info-and-uft8-info
+  (let [input-stream (mock-stream ["00" "03" "07" "00" "02" "01" "00"
+                                   "0A" "48" "65" "6C" "6C" "6F" "57"
+                                   "6F" "72" "6C" "64"])]
+    (is (= {:constant-pool {:1 {:class-info {:name-index 2}}
+                            :2 {:utf8-info {:value "HelloWorld"}}}}
+           (constant-pool input-stream)))))
+
+(deftest read-class-uft8-long-double-integer-methodref-info
+  (let [input-stream (mock-stream ["00" "09"
+                                   "07" "00" "02" "01" "00"
+                                   "0A" "48" "65" "6C" "6C" "6F" "57" "6F" "72" "6C" "64"
+                                   "05" "00" "00" "00" "00" "40" "C0" "00" "00"
+                                   "06" "00" "00" "00" "00" "00" "00" "00" "03"
+                                   "03" "00" "01" "E2" "40"
+                                   "0A" "00" "01" "00" "03"
+                                   ])]
+    (is (= {:constant-pool {:1 {:class-info {:name-index 2}}
+                            :2 {:utf8-info {:value "HelloWorld"}}
+                            :3 {:long-info {:value 1086324736}}
+                            :4 {:double-info {:value 3.0}}
+                            :5 {:integer-info {:value 123456}}
+                            :6 {:methodref-info {:class-index 1 :name-and-type-index 3}}}}
+           (constant-pool input-stream)))))
+
+
+
+
+
+
+

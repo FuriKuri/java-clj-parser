@@ -9,7 +9,7 @@
 
 (defn constant-count [input-stream]
   (let [hex (read-next-bytes-as-hex-str input-stream 2)]
-    {:constant-count (dec (hex-to-int hex))}))
+    (dec (hex-to-int hex))))
 
 (defmacro register-const-type
   ([const-type fields]
@@ -59,3 +59,19 @@
 (defmethod parse-const-type "06" [input-stream] (double-info input-stream))
 (defmethod parse-const-type "0c" [input-stream] (name-and-type-info input-stream))
 (defmethod parse-const-type "01" [input-stream] (utf8-info input-stream))
+
+(defn constant-pool [input-stream]
+  (let [const-count (constant-count input-stream)]
+    (loop [result {}
+           ref-id 1
+           long-double-count 0]
+      (if (= (+ (- ref-id 1) long-double-count) const-count)
+        {:constant-pool result}
+        (let [const-type (parse-const-type input-stream)
+              const-type-with-id {(keyword (str ref-id)) const-type}
+              is-long-double? (or (contains? const-type :long-info)
+                                  (contains? const-type :double-info))]
+          (recur (conj result const-type-with-id)
+                 (inc ref-id)
+                 (if is-long-double? (inc long-double-count) long-double-count)))))))
+           
